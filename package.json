@@ -10,7 +10,8 @@
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts ."
   },
   "dependencies": {
-    "discord.js": "^13.5.0"
+    "discord.js": "^13.5.0",
+    "dotenv": "^10.0.0"
   },
   "devDependencies": {
     "@types/mocha": "^9.0.0",
