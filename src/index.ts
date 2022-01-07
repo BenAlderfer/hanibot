@@ -4,7 +4,7 @@ import { Client, Intents } from "discord.js";
 import { welcomeMessage } from "./strings";
 
 // @ts-ignore
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILD_MEMBERS] });
 
 client.on("ready", async () => {
     console.info(`${client.user?.username} is online.`);
