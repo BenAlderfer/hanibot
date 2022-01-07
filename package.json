@@ -2,8 +2,9 @@
   "name": "rbc-bot",
   "version": "1.0.0",
   "description": "RBC Discord bot",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
+    "start": "npx ts-node src/index.ts",
     "compile": "tsc .",
     "test": "mocha --require ts-node/register src/**/*.spec.ts",
     "format": "prettier --ignore-path .prettierignore --write \"**/*.+(js|ts|json)\"",
