@@ -2,6 +2,9 @@
   "name": "rbc-bot",
   "version": "1.0.0",
   "description": "RBC Discord bot",
+  "engines": {
+    "node": "16.x"
+  },
   "main": "src/index.ts",
   "scripts": {
     "start": "npx ts-node src/index.ts",
