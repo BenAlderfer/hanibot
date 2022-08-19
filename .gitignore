@@ -1,6 +1,7 @@
 *.iml
 .idea/
 node_modules/
+.space/
 
 build/
 coverage/

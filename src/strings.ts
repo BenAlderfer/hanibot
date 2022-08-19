@@ -5,7 +5,7 @@ Code of Conduct
 • “Let no corrupting talk come out of your mouths, but only such as is good for building up, as fits the occasion, that it may give grace to those who hear.” - Ephesians 4:29. In the spirit of this verse, please watch your speech on this server and seek to glorify God with all you write and say. 
 • Please set your username so we know who you are. See “How to change your nickname” in the section below if you are not sure how to do this.
 • There are many channels on this server, please take advantage of them and post to the appropriate channel. If you are not interested in receiving messages for certain channels, feel free to mute them.
-• If you have any problems with someone or something in this community, please reach out to Pastor Jim, Hanibeth, or Larry.
+• If you have any problems with someone or something in this community, please reach out to Pastor David, Hanibeth, or Larry.
 
 New to Discord? Here are some helpful tips:
 
