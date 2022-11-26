@@ -18,3 +18,18 @@ client.on('guildMemberAdd', async member => {
 });
 
 client.login(process.env.TOKEN);
+
+
+// const { PrismaClient } = require("@prisma/client");
+//
+// const prisma = new PrismaClient();
+//
+// (async () => {
+//   try {
+//     console.log(await prisma.restaurant.create({ data: { } }));
+//   } catch (err) {
+//     console.error("error executing query:", err);
+//   } finally {
+//     prisma.$disconnect();
+//   }
+// })();
