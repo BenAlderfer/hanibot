@@ -5,13 +5,13 @@ import { Client, Events, GatewayIntentBits } from 'discord.js';
 import { welcomeMessage } from './strings';
 
 // @ts-ignore
-const client = new Client({ intents: [GatewayIntentBits.GuildMembers] });
+export const client = new Client({ intents: [GatewayIntentBits.GuildMembers] });
 
 client.on(Events.ClientReady, () => {
   console.info(`${client.user?.username} is online.`);
 });
 
-client.on(Events.GuildMemberAdd, async member => {
+client.on(Events.GuildMemberAdd, async (member) => {
   console.info(`Member added to server: ${member.user?.username}`);
   await member.send(welcomeMessage);
   console.info('Welcome message sent to user: ${member.user?.username}');
