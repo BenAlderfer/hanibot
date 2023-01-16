@@ -9,7 +9,7 @@
   "scripts": {
     "start": "npx ts-node src/index.ts",
     "compile": "tsc .",
-    "test": "mocha --require ts-node/register src/**/*.spec.ts",
+    "test": "mocha --require ts-node/register test/**/*.spec.ts",
     "format": "prettier --ignore-path .prettierignore --write \"**/*.+(js|ts|json)\"",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts ."
   },
