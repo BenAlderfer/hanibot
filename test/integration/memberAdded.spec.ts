@@ -29,7 +29,7 @@ describe(`integrations.events.${Events.GuildMemberAdd}`, function () {
       messageToAdmin = message;
     };
 
-    _.set(client, 'channels.cache.get', (channelId: string) => {
+    _.set(client, 'channels.cache.get', () => {
       return { send: channelSend };
     });
   });
