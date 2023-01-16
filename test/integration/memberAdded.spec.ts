@@ -10,9 +10,6 @@ import { testUserUsername } from '../testData/defaults';
 chai.use(sinonChai);
 const { expect } = chai;
 
-// start server
-require('../../src');
-
 describe(`integrations.events.${Events.GuildMemberAdd}`, function () {
   let member: GuildMember, messageToUser: string, messageToAdmin: string;
 
