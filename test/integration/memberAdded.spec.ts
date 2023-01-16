@@ -1,31 +1,65 @@
+import * as _ from 'lodash';
 import * as chai from 'chai';
 import * as sinon from 'sinon';
-import * as sinonChai from 'sinon-chai';
-import { Events } from 'discord.js';
+import sinonChai from 'sinon-chai';
+import { Events, GuildMember } from 'discord.js';
 import { client } from '../../src';
+import { welcomeMessage } from '../../src/strings';
+import { testUserUsername } from '../testData/defaults';
 
 chai.use(sinonChai);
 const { expect } = chai;
 
+// start server
+require('../../src');
+
 describe(`integrations.events.${Events.GuildMemberAdd}`, function () {
-  let member, memberSendStub, channelSendStub;
+  let member: GuildMember, messageToUser: string, messageToAdmin: string;
 
   beforeEach(function () {
-    memberSendStub = sinon.stub(client, 'channels.cache.send').resolves({});
-    channelSendStub = sinon.stub(client, 'channels.cache.send').resolves({});
-
-    member = {
-      send: memberSendStub
+    // @ts-ignore
+    member = new GuildMember();
+    // @ts-ignore
+    member.user = {
+      username: testUserUsername
     };
+    // @ts-ignore
+    member.send = (message: string) => {
+      messageToUser = message.toString();
+    };
+
+    const channelSend = (message: string) => {
+      messageToAdmin = message;
+    };
+
+    _.set(client, 'channels.cache.get', (channelId: string) => {
+      return { send: channelSend };
+    });
   });
 
   afterEach(function () {
     sinon.restore();
+    messageToUser = '';
+    messageToAdmin = '';
   });
 
-  it('sends a new user a welcome message', function () {
+  it('sends a new user a welcome message', async function () {
     client.emit(Events.GuildMemberAdd, member);
 
-    expect(1).to.be.equal(1);
+    // wait a bit for the event to get handled
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    expect(messageToUser).to.be.equal(welcomeMessage);
+  });
+
+  it('sends admin channel a message when a new member joins', async function () {
+    client.emit(Events.GuildMemberAdd, member);
+
+    // wait a bit for the event to get handled
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    expect(messageToAdmin).to.be.equal(
+      `${testUserUsername} has joined the server. Please add the guy/girl role to their account.`
+    );
   });
 });

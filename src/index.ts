@@ -12,14 +12,14 @@ client.on(Events.ClientReady, () => {
 });
 
 client.on(Events.GuildMemberAdd, async (member) => {
-  console.info(`Member added to server: ${member.user?.username}`);
+  console.info(`Member ${member.user?.username} added to server`);
   await member.send(welcomeMessage);
-  console.info('Welcome message sent to user: ${member.user?.username}');
+  console.info(`Welcome message sent to user: ${member.user?.username}`);
 
   // send a message to the admin channel to let us know about the new member
   try {
     // @ts-ignore
-    client.channels.cache
+    await client.channels.cache
       // @ts-ignore
       .get(process.env.ADMIN_CHANNEL)
       // @ts-ignore
