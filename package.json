@@ -1,6 +1,6 @@
 {
   "name": "rbc-bot",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "RBC Discord bot",
   "engines": {
     "node": "18.x"
@@ -9,7 +9,7 @@
   "scripts": {
     "start": "npx ts-node src/index.ts",
     "compile": "tsc .",
-    "test": "mocha --require ts-node/register test/**/*.spec.ts",
+    "test": "mocha --require ts-node/register test/**/*.spec.ts --exit",
     "format": "prettier --ignore-path .prettierignore --write \"**/*.+(js|ts|json)\"",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts ."
   },
