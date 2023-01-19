@@ -2,10 +2,13 @@
   "compilerOptions": {
     "target": "es2022",
     "module": "commonjs",
-    "strict": true,
+    "moduleResolution": "node",
     "esModuleInterop": true,
-    "skipLibCheck": true,
+    "strict": true,
+    "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
     "outDir": "build" // where to put the compiled JS files
   },
   "include": ["src"], // which files to compile

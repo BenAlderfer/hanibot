@@ -2,24 +2,21 @@ import * as _ from 'lodash';
 import * as chai from 'chai';
 import * as sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import { Events, GuildMember } from 'discord.js';
+import { Events } from 'discord.js';
 import { client } from '../../src';
 import { welcomeMessage } from '../../src/strings';
 import { testUserUsername } from '../testData/defaults';
+import memberJoinedRes from '../testData/memberJoinedRes';
+import loginRes from '../testData/loginRes';
 
 chai.use(sinonChai);
 const { expect } = chai;
 
 describe(`integrations.events.${Events.GuildMemberAdd}`, function () {
-  let member: GuildMember, messageToUser: string, messageToAdmin: string;
+  let member: any, messageToUser: string, messageToAdmin: string;
 
   beforeEach(function () {
-    // @ts-ignore
-    member = new GuildMember();
-    // @ts-ignore
-    member.user = {
-      username: testUserUsername
-    };
+    member = memberJoinedRes;
     // @ts-ignore
     member.send = (message: string) => {
       messageToUser = message.toString();
@@ -28,6 +25,8 @@ describe(`integrations.events.${Events.GuildMemberAdd}`, function () {
     const channelSend = (message: string) => {
       messageToAdmin = message;
     };
+
+    _.set(client, 'login', loginRes);
 
     _.set(client, 'channels.cache.get', () => {
       return { send: channelSend };

@@ -11,7 +11,8 @@
     "compile": "tsc .",
     "test": "mocha --require ts-node/register test/**/*.spec.ts --exit",
     "format": "prettier --ignore-path .prettierignore --write \"**/*.+(js|ts|json)\"",
-    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts ."
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+    "prettier-fix": "prettier --write ."
   },
   "dependencies": {
     "discord.js": "^14.5.0",
