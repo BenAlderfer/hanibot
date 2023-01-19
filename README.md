@@ -1,6 +1,6 @@
 # RBC Discord Bot
 
-This bot welcomes new users to the RBC discord server, tells them the rules, and provides helpful links
+This bot welcomes new users to the RBC discord server, tells them the rules, and provides helpful links. It also has some admin tools.
 
 ## Setup
 
@@ -18,4 +18,4 @@ The token can be found by visiting https://discord.com/developers/applications/ 
 
 ## Deploying
 
-Currently, the repo is set to automatically deploy to Heroku. Any new commits to master will get built and deployed.
+Currently, the repo is set to automatically deploy to Railway. Any new commits to `master` will get built and deployed to the staging environment, and anything on the `railway` branch will be sent to production.

@@ -1,5 +1,6 @@
 *.iml
 .idea/
+.fleet
 node_modules/
 .space/
 
