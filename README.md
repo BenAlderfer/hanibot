@@ -1,4 +1,4 @@
-# RBC Discord Bot
+# HaniBot
 
 This bot welcomes new users to the RBC discord server, tells them the rules, and provides helpful links. It also has some admin tools.
 
