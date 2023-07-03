@@ -1,6 +1,6 @@
 # Hanibot
 
-This bot welcomes new users to the RBC discord server, tells them the rules, and provides helpful links. It also has some admin tools.
+This bot welcomes new users to the RBC YA discord server, tells them the rules, and provides helpful links. It also has some admin tools.
 
 ## Setup
 
