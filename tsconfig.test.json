@@ -1,17 +1,16 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "module": "Node16",
-    "moduleResolution": "node16",
-    "rootDir": "src",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "strict": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "experimentalDecorators": true,
-    "outDir": "build"
+    "types": ["node", "mocha"]
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "build", "test"]
+  "include": ["src", "test"],
+  "exclude": ["node_modules", "build"]
 }
