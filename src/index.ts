@@ -25,12 +25,20 @@ client.on(Events.GuildMemberAdd, async (member) => {
   }
 });
 
-if (require.main === module) {
-  client
-    .login(BOT_TOKEN)
+export function startBot(token = BOT_TOKEN) {
+  if (!token) {
+    throw new Error('Missing required TOKEN environment variable');
+  }
+
+  return client
+    .login(token)
     .then(() => console.log(`bot logged in`))
     .catch((error) => {
       console.error('Failed to log in to Discord', error);
-      process.exit(1);
+      process.exitCode = 1;
     });
+}
+
+if (require.main === module) {
+  startBot();
 }

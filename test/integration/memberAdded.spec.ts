@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import * as chai from 'chai';
 import * as sinon from 'sinon';
 import sinonChai from 'sinon-chai';
@@ -6,7 +5,6 @@ import { Events } from 'discord.js';
 import { client } from '../../src';
 import { welcomeMessage } from '../../src/strings';
 import memberJoinedRes from '../testData/memberJoinedRes';
-import loginRes from '../testData/loginRes';
 
 chai.use(sinonChai);
 const { expect } = chai;
@@ -20,8 +18,6 @@ describe(`integrations.events.${Events.GuildMemberAdd}`, function () {
     member.send = (message: string) => {
       messageToUser = message.toString();
     };
-
-    _.set(client, 'login', loginRes);
   });
 
   afterEach(function () {
