@@ -9,7 +9,7 @@
   "scripts": {
     "start": "npx ts-node src/index.ts",
     "compile": "tsc -p .",
-    "test": "TS_NODE_PROJECT=tsconfig.test.json TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\",\"moduleResolution\":\"node\"}' mocha --require ts-node/register --extension ts \"test/**/*.spec.ts\" --exit",
+    "test": "TS_NODE_PROJECT=tsconfig.test.json TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\",\"moduleResolution\":\"node\"}' mocha --require ts-node/register --require test/setup.ts --extension ts \"test/**/*.spec.ts\" --exit",
     "format": "prettier --ignore-path .prettierignore --write \"**/*.+(js|ts|json)\"",
     "lint": "eslint .",
     "prettier-fix": "prettier --write ."

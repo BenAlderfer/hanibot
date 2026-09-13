@@ -6,7 +6,6 @@ import { Client, Events, GatewayIntentBits } from 'discord.js';
 import { welcomeMessage } from './strings';
 import { BOT_TOKEN } from './config';
 
-// @ts-ignore
 export const client = new Client({ intents: [GatewayIntentBits.GuildMembers] });
 
 client.on(Events.ClientReady, () => {
@@ -18,17 +17,15 @@ client.on(Events.GuildMemberAdd, async (member) => {
     console.info(`Member '${member.user?.username}' added to server`);
     await member.send(welcomeMessage);
     console.info(`Welcome message sent to user: ${member.user?.username}`);
-  } catch {
+  } catch (error) {
     console.error(
-      `Failed to send welcome message sent to user: ${member.user?.username}`
+      `Failed to send welcome message sent to user: ${member.user?.username}`,
+      error
     );
   }
 });
 
-// add role to user
-// const member = interaction.options.getMember('target');
-// if (member.roles.cache.some(role => role.name === 'role name')) {
-//   member.roles.add(role);
-// }
-
-client.login(BOT_TOKEN).then(() => console.log(`bot logged in`));
+client
+  .login(BOT_TOKEN)
+  .then(() => console.log(`bot logged in`))
+  .catch((error) => console.error('Failed to log in to Discord', error));
