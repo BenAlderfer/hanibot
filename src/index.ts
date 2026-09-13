@@ -25,7 +25,7 @@ client.on(Events.GuildMemberAdd, async (member) => {
   }
 });
 
-export function startBot(token = BOT_TOKEN) {
+export function startBot(token: string | undefined) {
   if (!token) {
     throw new Error('Missing required TOKEN environment variable');
   }
@@ -40,5 +40,5 @@ export function startBot(token = BOT_TOKEN) {
 }
 
 if (require.main === module) {
-  startBot();
+  startBot(BOT_TOKEN);
 }
