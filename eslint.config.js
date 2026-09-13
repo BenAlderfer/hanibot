@@ -20,6 +20,19 @@ module.exports = [
     }
   },
   {
-    ignores: ['node_modules', 'build']
+    files: ['eslint.config.js'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: {
+        require: 'readonly',
+        module: 'writable'
+      }
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off'
+    }
+  },
+  {
+    ignores: ['*.iml', '.idea/', 'node_modules/', 'build/', 'coverage/', '.env']
   }
 ];

@@ -18,7 +18,7 @@ client.on(Events.GuildMemberAdd, async (member) => {
     console.info(`Member '${member.user?.username}' added to server`);
     await member.send(welcomeMessage);
     console.info(`Welcome message sent to user: ${member.user?.username}`);
-  } catch (e) {
+  } catch {
     console.error(
       `Failed to send welcome message sent to user: ${member.user?.username}`
     );

@@ -15,28 +15,27 @@
     "prettier-fix": "prettier --write ."
   },
   "dependencies": {
-    "discord.js": "^14.5.0",
+    "discord.js": "^14.27.0",
     "dotenv": "^17.4.2",
-    "lodash": "^4.17.21",
-    "ts-node": "^10.4.0"
+    "lodash": "^4.18.1",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/chai": "^5.2.3",
-    "@types/lodash": "^4.14.191",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "^25.6.0",
-    "@types/sinon": "^21.0.1",
+    "@types/lodash": "^4.17.25",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^25.9.6",
+    "@types/sinon": "^22.0.0",
     "@types/sinon-chai": "^4.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.58.2",
-    "@typescript-eslint/parser": "^8.58.2",
     "chai": "^6.2.2",
-    "eslint": "^10.2.1",
+    "eslint": "^10.10.0",
     "eslint-config-prettier": "^10.1.8",
-    "mocha": "^11.7.5",
-    "prettier": "^3.8.3",
-    "sinon": "^21.1.2",
+    "mocha": "^12.0.1",
+    "prettier": "^3.9.6",
+    "sinon": "^22.1.0",
     "sinon-chai": "^4.0.1",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.70.0"
   }
 }
