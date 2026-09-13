@@ -25,7 +25,7 @@ client.on(Events.GuildMemberAdd, async (member) => {
   }
 });
 
-function start() {
+if (require.main === module) {
   client
     .login(BOT_TOKEN)
     .then(() => console.log(`bot logged in`))
@@ -33,8 +33,4 @@ function start() {
       console.error('Failed to log in to Discord', error);
       process.exit(1);
     });
-}
-
-if (require.main === module) {
-  start();
 }
