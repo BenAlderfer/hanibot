@@ -1,11 +1,20 @@
-# Run this on the NAS (copy this folder, then create .env from .env.example).
+# Run this on the NAS (copy this folder, then create .env.staging and .env.production
+# from the .example files, each with its own bot token).
 #   docker compose up -d
 services:
-  hanibot:
-    image: ghcr.io/benalderfer/hanibot:latest
-    container_name: hanibot
+  hanibot-staging:
+    image: ghcr.io/benalderfer/hanibot:staging   # built from master
+    container_name: hanibot-staging
     restart: unless-stopped
-    env_file: .env
+    env_file: .env.staging
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
+  hanibot-production:
+    image: ghcr.io/benalderfer/hanibot:production   # built from semver release tags
+    container_name: hanibot-production
+    restart: unless-stopped
+    env_file: .env.production
     labels:
       - com.centurylinklabs.watchtower.enable=true
 
@@ -18,4 +27,4 @@ services:
     environment:
       WATCHTOWER_LABEL_ENABLE: "true"   # only update containers with the label above
       WATCHTOWER_CLEANUP: "true"        # remove old images after updating
-      WATCHTOWER_POLL_INTERVAL: "300"   # check for a new image every 5 minutes
+      WATCHTOWER_POLL_INTERVAL: "300"   # check for new images every 5 minutes

@@ -34,10 +34,17 @@ Currently, the repo is set to automatically deploy to Railway. Any new commits t
 
 ### Self-hosting on a NAS (Docker)
 
-Pushes to `master` also build a Docker image and publish it to GitHub Container Registry (`.github/workflows/docker-publish.yaml`). To run it on a NAS or any Docker host:
+Pushes build a Docker image and publish it to GitHub Container Registry (`.github/workflows/docker-publish.yaml`), once the CI tests pass:
 
-1. Copy the `deploy/` folder to the host and create `deploy/.env` from `deploy/.env.example` (set `TOKEN`).
+- `master` -> `ghcr.io/benalderfer/hanibot:staging`
+- a pushed semver tag (e.g. `1.2.3`) -> `ghcr.io/benalderfer/hanibot:production` (also tagged with the version)
+
+To run both environments on a NAS or any Docker host:
+
+1. Copy the `deploy/` folder to the host and create `deploy/.env.staging` and `deploy/.env.production` from the `.example` files. Each environment needs its own bot `TOKEN`.
 2. If the GHCR package is private, run `docker login ghcr.io` once with a GitHub personal access token that has `read:packages`.
-3. Run `docker compose up -d`. Watchtower (included in `deploy/compose.yaml`) checks for a new image every 5 minutes and restarts the bot automatically.
+3. Run `docker compose up -d`. Watchtower (included in `deploy/compose.yaml`) checks for new images every 5 minutes and restarts the matching bot automatically.
+
+To release to production, tag the commit on `master` and push the tag: `git tag 1.2.3 && git push origin 1.2.3`.
 
 See `DEPLOYMENT_PLAN.md` for the full plan and rationale.
