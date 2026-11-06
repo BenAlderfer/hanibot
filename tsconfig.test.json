@@ -1,14 +1,9 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "es2022",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "strict": true,
-    "sourceMap": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "experimentalDecorators": true,
+    "module": "node20",
+    "moduleResolution": "node16",
+    "rootDir": ".",
     "types": ["node", "mocha"]
   },
   "include": ["src", "test"],
