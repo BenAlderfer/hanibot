@@ -32,7 +32,7 @@ Verified locally: `tsc` compiles the project cleanly. The Docker image itself ha
 ## Steps to go live
 
 ### 1. Merge and publish
-- [ ] Review and merge this branch to `master` (the existing "Node.js CI" workflow runs on the PR).
+- [ ] Review and merge this branch to `master` (the "Node.js CI" workflow runs on the PR; after merge, "Publish Docker image" re-runs it and only publishes if it passes).
 - [ ] Confirm the "Publish Docker image" run succeeds and the package appears at github.com/BenAlderfer?tab=packages.
 - [ ] Decide public vs private package. Private requires a one-time `docker login ghcr.io` on the NAS (personal access token, `read:packages`). Public is fine since no secrets are baked into the image.
 
@@ -55,7 +55,6 @@ Verified locally: `tsc` compiles the project cleanly. The Docker image itself ha
 - Staging vs production: this publishes only `master`. If you want a separate NAS staging bot, add a second tag/branch and a second compose service with its own token.
 - Set `LOG_CHANNEL_ID` in the NAS `.env` to log welcome DM status to a Discord channel; logging is disabled if it is unset.
 - Optional: Watchtower notifications (Discord/Pushover); pin to `sha-<commit>` tags for easy rollback.
-- Action versions (`@v3`/`@v4`/`@v5`/`@v6`) were written from memory of current releases; Dependabot or a quick check can bump them.
 
 ## Alternatives considered
 
