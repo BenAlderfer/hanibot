@@ -32,12 +32,14 @@ export class ChannelLogger {
           .permissionsFor(this.client.user!)
           ?.has([
             PermissionFlagsBits.ViewChannel,
-            PermissionFlagsBits.SendMessages
+            channel.isThread()
+              ? PermissionFlagsBits.SendMessagesInThreads
+              : PermissionFlagsBits.SendMessages
           ]);
       if (!canSend) {
         console.error(
           `Log channel ${this.channelId} is not usable`,
-          'bot lacks View Channel / Send Messages permission'
+          'bot lacks View Channel or Send Messages permission'
         );
         return;
       }

@@ -14,6 +14,7 @@ function fakeChannel(send: sinon.SinonStub, canSend = true) {
   return {
     isSendable: () => true,
     isDMBased: () => false,
+    isThread: () => false,
     permissionsFor: () => ({ has: () => canSend }),
     send
   } as any;
@@ -113,6 +114,28 @@ describe('ChannelLogger', function () {
 
     it('logs an error when the bot lacks send permission', async function () {
       fetch.resolves(fakeChannel(channelSend, false));
+
+      await new ChannelLogger(client, channelId).checkChannel();
+
+      expect(consoleError).to.have.been.calledWith(
+        `Log channel ${channelId} is not usable`
+      );
+    });
+
+    it('logs an error when fetching the channel fails', async function () {
+      const error = new Error('Unknown Channel');
+      fetch.rejects(error);
+
+      await new ChannelLogger(client, channelId).checkChannel();
+
+      expect(consoleError).to.have.been.calledWith(
+        `Log channel ${channelId} is not usable`,
+        error
+      );
+    });
+
+    it('logs an error when the channel is a DM', async function () {
+      fetch.resolves({ ...fakeChannel(channelSend), isDMBased: () => true });
 
       await new ChannelLogger(client, channelId).checkChannel();
 

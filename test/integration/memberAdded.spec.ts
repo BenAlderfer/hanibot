@@ -45,6 +45,16 @@ describe(`integrations.events.${Events.GuildMemberAdd}`, function () {
     );
   });
 
+  it('truncates long failure reasons in the log channel message', async function () {
+    sinon.stub(console, 'error');
+    member.send = () => Promise.reject(new Error('x'.repeat(5000)));
+
+    client.emit(Events.GuildMemberAdd, member);
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    expect(channelLog.firstCall.args[0].length).to.be.below(2000);
+  });
+
   it('logs the failure to the log channel if the welcome message fails', async function () {
     sinon.stub(console, 'error');
     member.send = () =>
