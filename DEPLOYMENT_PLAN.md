@@ -53,7 +53,7 @@ Verified locally: `tsc` compiles the project cleanly. The Docker image itself ha
 - Use the maintained Watchtower fork `nickfedor/watchtower`. The original `containrrr/watchtower` was archived in December 2025 and its Docker API client is rejected by newer Docker engines.
 - Watchtower mounts the Docker socket, so it can control the host's Docker. `WATCHTOWER_LABEL_ENABLE` limits which containers it updates.
 - Staging vs production: this publishes only `master`. If you want a separate NAS staging bot, add a second tag/branch and a second compose service with its own token.
-- The channel-logging feature lives on the separate `discord-channel-logging` branch. Once merged, set `LOG_CHANNEL_ID` in the NAS `.env`.
+- Set `LOG_CHANNEL_ID` in the NAS `.env` to log welcome DM status to a Discord channel; logging is disabled if it is unset.
 - Optional: Watchtower notifications (Discord/Pushover); pin to `sha-<commit>` tags for easy rollback.
 - Action versions (`@v3`/`@v4`/`@v5`/`@v6`) were written from memory of current releases; Dependabot or a quick check can bump them.
 
