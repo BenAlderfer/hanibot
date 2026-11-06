@@ -13,7 +13,12 @@ permissions:
   packages: write
 
 jobs:
+  # Only publish an image if the tests pass for this commit.
+  test:
+    uses: ./.github/workflows/config.yaml
+
   publish:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
