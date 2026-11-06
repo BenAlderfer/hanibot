@@ -1,7 +1,12 @@
 import * as chai from 'chai';
 import * as sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import { Events, userMention } from 'discord.js';
+import {
+  DiscordAPIError,
+  Events,
+  RESTJSONErrorCodes,
+  userMention
+} from 'discord.js';
 import { channelLogger, client } from '../../src';
 import { welcomeMessage } from '../../src/strings';
 import memberJoinedRes from '../testData/memberJoinedRes';
@@ -66,5 +71,31 @@ describe(`integrations.events.${Events.GuildMemberAdd}`, function () {
     expect(channelLog).to.have.been.calledOnceWith(
       `Failed to send welcome message to ${userMention(testUserId)} (${testUserUsername}): Cannot send messages to this user`
     );
+  });
+
+  it('warns instead of erroring when the user has DMs disabled', async function () {
+    const consoleError = sinon.stub(console, 'error');
+    const consoleWarn = sinon.stub(console, 'warn');
+    member.send = () =>
+      Promise.reject(
+        new DiscordAPIError(
+          {
+            code: RESTJSONErrorCodes.CannotSendMessagesToThisUser,
+            message: 'Cannot send messages to this user'
+          },
+          RESTJSONErrorCodes.CannotSendMessagesToThisUser,
+          403,
+          'POST',
+          '',
+          {}
+        )
+      );
+
+    client.emit(Events.GuildMemberAdd, member);
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    expect(consoleWarn.callCount).to.equal(1);
+    expect(consoleError.callCount).to.equal(0);
+    expect(channelLog.callCount).to.equal(1);
   });
 });

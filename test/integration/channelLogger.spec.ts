@@ -28,6 +28,7 @@ describe('ChannelLogger', function () {
 
   beforeEach(function () {
     client = new Client({ intents: [] });
+    sinon.stub(client, 'user').get(() => ({ id: 'bot-id' }));
     channelSend = sinon.stub().resolves();
     fetch = sinon
       .stub(client.channels, 'fetch')
@@ -116,6 +117,18 @@ describe('ChannelLogger', function () {
       fetch.resolves(fakeChannel(channelSend, false));
 
       await new ChannelLogger(client, channelId).checkChannel();
+
+      expect(consoleError).to.have.been.calledWith(
+        `Log channel ${channelId} is not usable`
+      );
+    });
+
+    it('logs an error when the client is not logged in yet', async function () {
+      sinon.restore();
+      consoleError = sinon.stub(console, 'error');
+      const loggedOutClient = new Client({ intents: [] });
+
+      await new ChannelLogger(loggedOutClient, channelId).checkChannel();
 
       expect(consoleError).to.have.been.calledWith(
         `Log channel ${channelId} is not usable`
