@@ -18,35 +18,39 @@ Goal: every push to `master` redeploys the staging bot, and every pushed semver 
 
 ## What's in this branch (`nas-docker-deploy`)
 
-| File | Purpose |
-|---|---|
-| `Dockerfile` | Two-stage build (`npm run compile`, then runtime with prod deps only, runs `node build/index.js` as the non-root `node` user) |
-| `.dockerignore` | Keeps `.git`, `node_modules`, `build`, `.env`, tests, etc. out of the image |
-| `.github/workflows/docker-publish.yaml` | Tests, then builds and pushes the image to GHCR on every push to `master` (`:staging`) or semver tag (`:production`); also manually runnable |
-| `deploy/compose.yaml` | NAS stack: staging bot, production bot, and Watchtower (labelled so it only updates the bots) |
-| `deploy/.env.staging.example`, `deploy/.env.production.example` | Templates for the NAS-side env files (`TOKEN`, optional `LOG_CHANNEL_ID`) |
-| `README.md` | New "Self-hosting on a NAS" section |
+| File                                                            | Purpose                                                                                                                                      |
+| --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Dockerfile`                                                    | Two-stage build (`npm run compile`, then runtime with prod deps only, runs `node build/index.js` as the non-root `node` user)                |
+| `.dockerignore`                                                 | Keeps `.git`, `node_modules`, `build`, `.env`, tests, etc. out of the image                                                                  |
+| `.github/workflows/docker-publish.yaml`                         | Tests, then builds and pushes the image to GHCR on every push to `master` (`:staging`) or semver tag (`:production`); also manually runnable |
+| `deploy/compose.yaml`                                           | NAS stack: staging bot, production bot, and Watchtower (labelled so it only updates the bots)                                                |
+| `deploy/.env.staging.example`, `deploy/.env.production.example` | Templates for the NAS-side env files (`TOKEN`, optional `LOG_CHANNEL_ID`)                                                                    |
+| `README.md`                                                     | New "Self-hosting on a NAS" section                                                                                                          |
 
 Verified locally: `tsc` compiles the project cleanly. The Docker image itself has not been built (no Docker available where this was prepared), so the first Actions run is the real test.
 
 ## Steps to go live
 
 ### 1. Merge and publish
+
 - [ ] Review and merge this branch to `master` (the "Node.js CI" workflow runs on the PR; after merge, "Publish Docker image" re-runs it and only publishes if it passes).
 - [ ] Confirm the "Publish Docker image" run succeeds and the package appears at github.com/BenAlderfer?tab=packages.
 - [ ] Decide public vs private package. Private requires a one-time `docker login ghcr.io` on the NAS (personal access token, `read:packages`). Public is fine since no secrets are baked into the image.
 
 ### 2. Prepare the NAS
+
 - [ ] Copy `deploy/` to the NAS (e.g. `/volume1/docker/hanibot/`).
 - [ ] Tag the merged `master` commit (`git tag 1.0.0 && git push origin 1.0.0`) so the `:production` image exists.
 - [ ] Create `.env.staging` and `.env.production` from the examples, each with its own bot `TOKEN` (production can reuse the token Railway uses).
 - [ ] `docker compose up -d`, then `docker compose logs -f hanibot-staging hanibot-production` and look for "bot logged in".
 
 ### 3. Cut over from Railway
+
 - [ ] Only one instance should be logged in with the token, or members get two welcome DMs. Stop or remove the Railway production service once the NAS instance is confirmed working.
 - [ ] Test by joining the server with an alt account.
 
 ### 4. Verify the full loop
+
 - [ ] Push a trivial change to `master` (and later a semver tag), confirm the Actions run succeeds, and confirm within ~5 minutes that `docker compose logs watchtower` shows the pull and restart.
 
 ## Notes

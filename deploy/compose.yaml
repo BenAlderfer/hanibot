@@ -3,7 +3,7 @@
 #   docker compose up -d
 services:
   hanibot-staging:
-    image: ghcr.io/benalderfer/hanibot:staging   # built from master
+    image: ghcr.io/benalderfer/hanibot:staging # built from master
     container_name: hanibot-staging
     restart: unless-stopped
     env_file: .env.staging
@@ -11,7 +11,7 @@ services:
       - com.centurylinklabs.watchtower.enable=true
 
   hanibot-production:
-    image: ghcr.io/benalderfer/hanibot:production   # built from semver release tags
+    image: ghcr.io/benalderfer/hanibot:production # built from semver release tags
     container_name: hanibot-production
     restart: unless-stopped
     env_file: .env.production
@@ -19,12 +19,12 @@ services:
       - com.centurylinklabs.watchtower.enable=true
 
   watchtower:
-    image: nickfedor/watchtower:latest
+    image: nickfedor/watchtower:1.24.0
     container_name: watchtower
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      WATCHTOWER_LABEL_ENABLE: "true"   # only update containers with the label above
-      WATCHTOWER_CLEANUP: "true"        # remove old images after updating
-      WATCHTOWER_POLL_INTERVAL: "300"   # check for new images every 5 minutes
+      WATCHTOWER_LABEL_ENABLE: 'true' # only update containers with the label above
+      WATCHTOWER_CLEANUP: 'true' # remove old images after updating
+      WATCHTOWER_POLL_INTERVAL: '300' # check for new images every 5 minutes

@@ -24,12 +24,16 @@ export class ChannelLogger {
     }
 
     try {
+      const botUser = this.client.user;
+      if (!botUser) {
+        throw new Error('Client is not logged in yet');
+      }
       const channel = await this.fetchChannel(this.channelId);
       // isSendable() only checks the channel type, so also check permissions.
       const canSend =
         !channel.isDMBased() &&
         channel
-          .permissionsFor(this.client.user!)
+          .permissionsFor(botUser)
           ?.has([
             PermissionFlagsBits.ViewChannel,
             channel.isThread()
