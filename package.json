@@ -3,39 +3,39 @@
   "version": "1.2.0",
   "description": "RBC Discord bot",
   "engines": {
-    "node": "24.x"
+    "node": "26.x"
   },
   "main": "src/index.ts",
   "scripts": {
     "start": "npx ts-node src/index.ts",
     "compile": "tsc -p .",
-    "test": "TS_NODE_PROJECT=tsconfig.test.json TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\",\"moduleResolution\":\"node\"}' mocha --require ts-node/register --extension ts \"test/**/*.spec.ts\" --exit",
+    "test": "TS_NODE_PROJECT=tsconfig.test.json mocha --require ts-node/register --extension ts \"test/**/*.spec.ts\" --exit",
     "format": "prettier --ignore-path .prettierignore --write \"**/*.+(js|ts|json)\"",
     "lint": "eslint .",
     "prettier-fix": "prettier --write ."
   },
   "dependencies": {
-    "discord.js": "^14.27.0",
-    "dotenv": "^17.4.2",
+    "discord.js": "^14.28.1",
+    "dotenv": "^18.0.9",
     "lodash": "^4.18.1",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/chai": "^5.2.3",
-    "@types/lodash": "^4.17.25",
+    "@types/lodash": "^4.17.27",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^25.9.6",
-    "@types/sinon": "^22.0.0",
-    "@types/sinon-chai": "^4.0.0",
-    "chai": "^6.2.2",
-    "eslint": "^10.10.0",
+    "@types/node": "^26.6.6",
+    "@types/sinon": "^22.0.2",
+    "@types/sinon-chai": "^4.0.1",
+    "chai": "^6.3.0",
+    "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
-    "mocha": "^12.0.1",
-    "prettier": "^3.9.6",
+    "mocha": "^12.0.3",
+    "prettier": "^3.9.10",
     "sinon": "^22.1.0",
     "sinon-chai": "^4.0.1",
-    "typescript": "^6.0.3",
-    "typescript-eslint": "^8.70.0"
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.1"
   }
 }
