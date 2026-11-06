@@ -45,7 +45,7 @@ describe(`integrations.events.${Events.GuildMemberAdd}`, function () {
     );
   });
 
-  it('does not log to the log channel if the welcome message fails', async function () {
+  it('logs the failure to the log channel if the welcome message fails', async function () {
     sinon.stub(console, 'error');
     member.send = () =>
       Promise.reject(new Error('Cannot send messages to this user'));
@@ -53,6 +53,8 @@ describe(`integrations.events.${Events.GuildMemberAdd}`, function () {
     client.emit(Events.GuildMemberAdd, member);
     await new Promise((resolve) => setTimeout(resolve, 100));
 
-    expect(channelLog).to.have.callCount(0);
+    expect(channelLog).to.have.been.calledOnceWith(
+      `Failed to send welcome message to ${userMention(testUserId)} (${testUserUsername}): Cannot send messages to this user`
+    );
   });
 });

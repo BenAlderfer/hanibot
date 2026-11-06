@@ -27,7 +27,7 @@ export class ChannelLogger {
       const channel = await this.fetchChannel(this.channelId);
       // isSendable() only checks the channel type, so also check permissions.
       const canSend =
-        channel.isDMBased() ||
+        !channel.isDMBased() &&
         channel
           .permissionsFor(this.client.user!)
           ?.has([
@@ -35,7 +35,11 @@ export class ChannelLogger {
             PermissionFlagsBits.SendMessages
           ]);
       if (!canSend) {
-        throw new Error('Bot lacks View Channel / Send Messages permission');
+        console.error(
+          `Log channel ${this.channelId} is not usable`,
+          'bot lacks View Channel / Send Messages permission'
+        );
+        return;
       }
       console.info(`Channel logging enabled for channel ${this.channelId}`);
     } catch (error) {

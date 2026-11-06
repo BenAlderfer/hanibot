@@ -14,7 +14,7 @@ The token can be found by visiting https://discord.com/developers/applications/ 
 
 ### Log channel (optional)
 
-Some events are also posted to a Discord channel (currently: confirmation that a new member was sent the welcome DM). To enable this, add the channel's ID:
+Some events are also posted to a Discord channel (currently: whether each new member's welcome DM was sent or failed, and why). To enable this, add the channel's ID:
 
 ```
 LOG_CHANNEL_ID=<channel id>

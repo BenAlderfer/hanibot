@@ -3,17 +3,19 @@ import * as sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import { Client } from 'discord.js';
 import { ChannelLogger } from '../../src/channelLogger';
+import fetchChannelRes from '../testData/fetchChannelRes';
 
 chai.use(sinonChai);
 const { expect } = chai;
 
-const channelId = '800439911764328528';
+const channelId = fetchChannelRes.id;
 
-function fakeGuildChannel(hasPermission: boolean) {
+function fakeChannel(send: sinon.SinonStub, canSend = true) {
   return {
     isSendable: () => true,
     isDMBased: () => false,
-    permissionsFor: () => ({ has: () => hasPermission })
+    permissionsFor: () => ({ has: () => canSend }),
+    send
   } as any;
 }
 
@@ -28,7 +30,7 @@ describe('ChannelLogger', function () {
     channelSend = sinon.stub().resolves();
     fetch = sinon
       .stub(client.channels, 'fetch')
-      .resolves({ isSendable: () => true, send: channelSend } as any);
+      .resolves(fakeChannel(channelSend));
     consoleError = sinon.stub(console, 'error');
   });
 
@@ -101,7 +103,6 @@ describe('ChannelLogger', function () {
 
     it('reports success when the bot can send to the channel', async function () {
       const consoleInfo = sinon.stub(console, 'info');
-      fetch.resolves(fakeGuildChannel(true));
 
       await new ChannelLogger(client, channelId).checkChannel();
 
@@ -111,7 +112,7 @@ describe('ChannelLogger', function () {
     });
 
     it('logs an error when the bot lacks send permission', async function () {
-      fetch.resolves(fakeGuildChannel(false));
+      fetch.resolves(fakeChannel(channelSend, false));
 
       await new ChannelLogger(client, channelId).checkChannel();
 

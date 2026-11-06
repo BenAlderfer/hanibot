@@ -24,17 +24,20 @@ client.on(Events.ClientReady, () => {
 });
 
 client.on(Events.GuildMemberAdd, async (member) => {
+  const user = `${userMention(member.user.id)} (${escapeMarkdown(member.user.username)})`;
   try {
     console.info(`Member '${member.user.username}' added to server`);
     await member.send(welcomeMessage);
     console.info(`Welcome message sent to user: ${member.user.username}`);
-    await channelLogger.send(
-      `Welcome message sent to ${userMention(member.user.id)} (${escapeMarkdown(member.user.username)})`
-    );
+    await channelLogger.send(`Welcome message sent to ${user}`);
   } catch (error) {
     console.error(
       `Failed to send welcome message sent to user: ${member.user.username}`,
       error
+    );
+    const reason = error instanceof Error ? error.message : String(error);
+    await channelLogger.send(
+      `Failed to send welcome message to ${user}: ${escapeMarkdown(reason)}`
     );
   }
 });
