@@ -1,0 +1,21 @@
+# Run this on the NAS (copy this folder, then create .env from .env.example).
+#   docker compose up -d
+services:
+  hanibot:
+    image: ghcr.io/benalderfer/hanibot:latest
+    container_name: hanibot
+    restart: unless-stopped
+    env_file: .env
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
+  watchtower:
+    image: nickfedor/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WATCHTOWER_LABEL_ENABLE: "true"   # only update containers with the label above
+      WATCHTOWER_CLEANUP: "true"        # remove old images after updating
+      WATCHTOWER_POLL_INTERVAL: "300"   # check for a new image every 5 minutes
