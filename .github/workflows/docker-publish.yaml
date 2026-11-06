@@ -1,11 +1,13 @@
 name: Publish Docker image
 
 # Builds the bot image and pushes it to GitHub Container Registry (GHCR).
-# The NAS runs Watchtower, which pulls the new :latest image and restarts the bot.
+# master -> :staging; a pushed semver tag (e.g. 1.2.3) -> :production (plus the tag name).
+# The NAS runs Watchtower, which pulls the new image for each tag and restarts the matching bot.
 
 on:
   push:
     branches: [master]
+    tags: ['[0-9]+.[0-9]+.[0-9]+']
   workflow_dispatch:
 
 permissions:
@@ -39,8 +41,10 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}
           tags: |
-            type=raw,value=latest
-            type=sha
+            type=raw,value=staging,enable=${{ github.ref == 'refs/heads/master' }}
+            type=sha,prefix=staging-,enable=${{ github.ref == 'refs/heads/master' }}
+            type=raw,value=production,enable=${{ startsWith(github.ref, 'refs/tags/') }}
+            type=ref,event=tag
 
       - uses: docker/build-push-action@v7
         with:
