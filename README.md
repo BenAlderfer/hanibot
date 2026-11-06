@@ -31,3 +31,13 @@ To send something else to the log channel, call `channelLogger.send(message)` wh
 ## Deploying
 
 Currently, the repo is set to automatically deploy to Railway. Any new commits to `master` will get built and deployed to the staging environment, and anything on the `railway` branch will be sent to production.
+
+### Self-hosting on a NAS (Docker)
+
+Pushes to `master` also build a Docker image and publish it to GitHub Container Registry (`.github/workflows/docker-publish.yaml`). To run it on a NAS or any Docker host:
+
+1. Copy the `deploy/` folder to the host and create `deploy/.env` from `deploy/.env.example` (set `TOKEN`).
+2. If the GHCR package is private, run `docker login ghcr.io` once with a GitHub personal access token that has `read:packages`.
+3. Run `docker compose up -d`. Watchtower (included in `deploy/compose.yaml`) checks for a new image every 5 minutes and restarts the bot automatically.
+
+See `DEPLOYMENT_PLAN.md` for the full plan and rationale.

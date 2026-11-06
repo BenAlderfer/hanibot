@@ -1,0 +1,15 @@
+.git
+.github
+.idea
+.fleet
+.space
+node_modules
+build
+coverage
+test
+deploy
+*.iml
+.env
+.env.*
+DEPLOYMENT_PLAN.md
+README.md
